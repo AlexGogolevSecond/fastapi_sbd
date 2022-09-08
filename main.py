@@ -1,10 +1,12 @@
 from fastapi import FastAPI
  
 app = FastAPI()
+
  
 @app.get("/")
 async def root():
     return "Phonebook"
+
  
 @app.post("/add-user")
 async def add_user(firstname: str, lastname: str, phone_number: str, age: int | None = None):
@@ -16,6 +18,7 @@ async def add_user(firstname: str, lastname: str, phone_number: str, age: int | 
         print(f'age: {age}')
  
     return 'user is added'
+
  
 @app.get("/get-user")
 async def get_user(lastname: str):
