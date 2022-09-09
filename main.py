@@ -12,13 +12,13 @@ async def root():
  
 @app.post("/add-user")
 async def add_user(firstname: str, lastname: str, phone_number: str, age: int | None = None):
-    print(f'firstname: {firstname}')
-    print(f'lastname: {lastname}')
-    print(f'phone_number: {phone_number}')
- 
-    if age:
-        print(f'age: {age}')
- 
+    # print(f'firstname: {firstname}')
+    # print(f'lastname: {lastname}')
+    # print(f'phone_number: {phone_number}')
+    #
+    # if age:
+    #     print(f'age: {age}')
+
     return 'user is added'
 
  
