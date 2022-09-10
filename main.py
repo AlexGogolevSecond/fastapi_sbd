@@ -24,8 +24,14 @@ async def add_user(firstname: str, lastname: str, phone_number: str, age: int | 
     user_dict['Lastname'] = lastname
     user_dict['Phone number'] = phone_number
 
+    user_dict['Age'] = age if age else None
 
-
+    print(f'user_dict: {user_dict}')
+    df_temp = pd.DataFrame([user_dict])
+    print(f'df_phonebook: {df_phonebook}')
+    print(f'df_temp: {df_temp}')
+    df_phonebook = pd.concat([df_phonebook, df_temp])
+    df_phonebook.to_csv('db.csv')
 
     # print(f'firstname: {firstname}')
     # print(f'lastname: {lastname}')
