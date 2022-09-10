@@ -64,5 +64,5 @@ async def get_user(lastname: str):
     value = json.dumps(dict({'Phone number': df_temp.iloc[0]['Phone number']}))
     return value
 
-if __name__ == '__main__':
-    uvicorn.run('main:app')
+# if __name__ == '__main__':
+#     uvicorn.run('main:app')
