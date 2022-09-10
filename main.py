@@ -4,7 +4,7 @@ import pandas as pd
  
 app = FastAPI()
 
-# lalala
+
 @app.get("/")
 async def root():
     return "Phonebook"
@@ -12,6 +12,21 @@ async def root():
  
 @app.post("/add-user")
 async def add_user(firstname: str, lastname: str, phone_number: str, age: int | None = None):
+    # Считываем/создаём телефонный справочник
+    try:
+        df_phonebook = pd.read_csv('db.csv')
+    except:
+        df_phonebook = pd.DataFrame(columns=['Firstname', 'Lastname', 'Phone number', 'Age'])
+        df_phonebook['Phone number'] = df_phonebook['Phone number'].astype(str)
+
+    user_dict = {}
+    user_dict['Firstname'] = firstname
+    user_dict['Lastname'] = lastname
+    user_dict['Phone number'] = phone_number
+
+
+
+
     # print(f'firstname: {firstname}')
     # print(f'lastname: {lastname}')
     # print(f'phone_number: {phone_number}')
