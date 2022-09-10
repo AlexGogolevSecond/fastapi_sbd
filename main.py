@@ -2,8 +2,9 @@ from fastapi import FastAPI
 import json
 import pandas as pd
 import uvicorn
-from date_request_model import *
- 
+from date_request_model import User
+
+
 app = FastAPI()
 
 
@@ -13,7 +14,7 @@ async def root():
 
  
 @app.post("/add-user")
-async def add_user(firstname: str, lastname: str, phone_number: str, age: int | None = None):
+async def add_user(parameters: User):
     # Считываем/создаём телефонный справочник
     try:
         df_phonebook = pd.read_csv('db.csv')
@@ -21,12 +22,13 @@ async def add_user(firstname: str, lastname: str, phone_number: str, age: int | 
         df_phonebook = pd.DataFrame(columns=['Firstname', 'Lastname', 'Phone number', 'Age'])
         df_phonebook['Phone number'] = df_phonebook['Phone number'].astype(str)
 
+    print(type(parameters))
     user_dict = {}
-    user_dict['Firstname'] = firstname
-    user_dict['Lastname'] = lastname
-    user_dict['Phone number'] = phone_number
+    user_dict['Firstname'] = parameters.firstname
+    user_dict['Lastname'] = parameters.lastname
+    user_dict['Phone number'] = parameters.phone_number
 
-    user_dict['Age'] = age if age else 'None'
+    user_dict['Age'] = parameters.age if parameters.age else 'None'
 
     print(f'user_dict: {user_dict}')
     df_temp = pd.DataFrame([user_dict])
