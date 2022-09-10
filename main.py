@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 import json
 import pandas as pd
+import uvicorn
+from date_request_model import *
  
 app = FastAPI()
 
@@ -24,7 +26,7 @@ async def add_user(firstname: str, lastname: str, phone_number: str, age: int | 
     user_dict['Lastname'] = lastname
     user_dict['Phone number'] = phone_number
 
-    user_dict['Age'] = age if age else None
+    user_dict['Age'] = age if age else 'None'
 
     print(f'user_dict: {user_dict}')
     df_temp = pd.DataFrame([user_dict])
@@ -45,4 +47,20 @@ async def add_user(firstname: str, lastname: str, phone_number: str, age: int | 
  
 @app.get("/get-user")
 async def get_user(lastname: str):
-    return f'{lastname} 89021112223 55'
+    # return f'{lastname} 89021112223 55'
+    try:
+        df_phonebook = pd.read_csv('db.csv')
+        # df_phonebook['Phone number'] = df_phonebook['Phone number'].astype(str)
+    except:
+        df_phonebook = pd.DataFrame(columns=['Firstname', 'Lastname', 'Phone number', 'Age'])
+
+    df_temp = df_phonebook[df_phonebook['Lastname'] == lastname]
+    if df_temp.empty:
+        return ' There is not such user'
+
+    print(dict(df_temp.iloc[0]))
+    value = json.dumps(dict({'Phone number': df_temp.iloc[0]['Phone number']}))
+    return value
+
+if __name__ == '__main__':
+    uvicorn.run('main:app')
