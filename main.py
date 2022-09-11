@@ -3,7 +3,13 @@ import json
 import pandas as pd
 import uvicorn
 from date_request_model import User
+from psycopg2 import *
 
+HOST_DB = '0.0.0.0'
+PORT = 5432
+POSTGRES_USER = 'ttt'
+POSTGRES_PASSWORD = '123ttt'
+POSTGRES_DB = 'rainbow_database'
 
 app = FastAPI()
 
